@@ -253,8 +253,15 @@ namespace ACT4
         {
             while (getAttackingPairs(currentState) > 0 && temperature > 0.1)
             {
-                executeMove((Point)chosenMove);
-                chosenMove = chooseMove(bMoves);
+                if (bMoves != null && bMoves.Count > 0 && chosenMove != null)
+                {
+                    executeMove((Point)chosenMove);
+                    hTable = getHeuristicTableForPossibleMoves(currentState);
+                    bMoves = getBestMoves(hTable);
+
+                    if (bMoves.Count > 0)
+                        chosenMove = chooseMove(bMoves);
+                }
             }
         }
 
